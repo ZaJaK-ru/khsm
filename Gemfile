@@ -1,6 +1,8 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 4.2.6'
+ruby '2.4.2'
+
+gem 'rails', '~> 4.2.10'
 
 # Удобная админка для управления любыми сущностями
 gem 'rails_admin'
@@ -19,7 +21,7 @@ group :development, :test do
   gem 'sqlite3', '~> 1.3.13'
   gem 'byebug'
   gem 'rspec-rails', '~> 3.4'
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'shoulda-matchers'
 
   # Гем, который использует rspec, чтобы смотреть наш сайт
