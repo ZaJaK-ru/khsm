@@ -114,4 +114,23 @@ RSpec.describe Game, type: :model do
       expect(game_w_questions.status).to eq(:money)
     end
   end
+
+  context '.answer_current_question!' do
+    let(:question) { game_w_questions.current_game_question }
+
+    it 'correct answer' do
+      expect(game_w_questions.answer_current_question!(question.correct_answer_key)).to be(true)
+      expect(game_w_questions.status).to eq(:in_progress)
+      expect(game_w_questions.finished?).to be(false)
+    end
+
+    it 'no correct anwser' do
+    end
+
+    it 'last million' do
+    end
+
+    it 'timeot' do
+    end
+  end
 end
