@@ -30,8 +30,10 @@ RSpec.describe GameQuestion, type: :model do
       expect(game_question.level).to eq(game_question.question.level)
     end
 
-    it 'correct .correct_answer_key' do
-      expect(game_question.correct_answer_key).to eq('b')
+    describe '#correct_answer_key' do
+      it 'return correct .correct_answer_key' do
+        expect(game_question.correct_answer_key).to eq('b')
+      end
     end
   end
 
