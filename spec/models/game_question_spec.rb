@@ -11,7 +11,7 @@ RSpec.describe GameQuestion, type: :model do
   let(:game_question) { FactoryBot.create(:game_question, a: 2, b: 1, c: 4, d: 3) }
 
   # группа тестов на игровое состояние объекта вопроса
-  context 'game status' do
+  describe 'game status' do
     # тест на правильную генерацию хэша с вариантами
     it 'correct .variants' do
       expect(game_question.variants).to eq({'a' => game_question.question.answer2,
@@ -37,7 +37,7 @@ RSpec.describe GameQuestion, type: :model do
     end
   end
 
-  context 'user helpers' do
+  describe 'user helpers' do
     it 'correct audience_help' do
       expect(game_question.help_hash).not_to include(:audience_help)
 
