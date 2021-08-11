@@ -118,19 +118,32 @@ RSpec.describe Game, type: :model do
   context '.answer_current_question!' do
     let(:question) { game_w_questions.current_game_question }
 
-    it 'correct answer' do
-      expect(game_w_questions.answer_current_question!(question.correct_answer_key)).to be(true)
+    it 'correct answer returns true' do
+      expect(game_w_questions.answer_current_question!(question.correct_answer_key)).to be_truthy
       expect(game_w_questions.status).to eq(:in_progress)
-      expect(game_w_questions.finished?).to be(false)
+      expect(game_w_questions.finished?).to be_falsey
     end
 
-    it 'no correct anwser' do
+    it 'no correct anwser returns false' do
+      expect(game_w_questions.answer_current_question!('a')).to be_falsey
+      expect(game_w_questions.status).to eq(:fail)
+      expect(game_w_questions.finished?).to be_truthy
     end
 
-    it 'last million' do
+    it 'last question (million) returns true' do
+      game_w_questions.current_level = 14
+      expect(game_w_questions.answer_current_question!(question.correct_answer_key)).to be_truthy
+      expect(game_w_questions.current_level).to eq(15)
+      expect(game_w_questions.prize).to eq(1_000_000)
+      expect(game_w_questions.status).to eq(:won)
+      expect(game_w_questions.finished?).to be_truthy
     end
 
-    it 'timeot' do
+    it 'time out for answer returns false' do
+      game_w_questions.created_at = 36.minutes.ago
+      expect(game_w_questions.answer_current_question!(question.correct_answer_key)).to be_falsey
+      expect(game_w_questions.status).to eq(:timeout)
+      expect(game_w_questions.finished?).to be_truthy
     end
   end
 end
