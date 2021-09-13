@@ -94,8 +94,8 @@ RSpec.describe GamesController, type: :controller do
     end
 
     it 'answers wrong' do
-      put :answer, id: game_w_questions.id, letter: 'a'
-
+      wrong_answer = %w[a b c d].delete_if { |answer| answer == game_w_questions.current_game_question.correct_answer_key }.sample
+      put :answer, id: game_w_questions.id, letter: wrong_answer
       game = assigns(:game)
 
       expect(game.finished?).to be true
