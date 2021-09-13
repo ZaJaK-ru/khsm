@@ -30,6 +30,19 @@ RSpec.describe GameQuestion, type: :model do
       expect(game_question.level).to eq(game_question.question.level)
     end
 
+    it 'correct .help_hash' do
+      expect(game_question.help_hash).to eq({})
+
+      game_question.help_hash[:some_key1] = 'blabla1'
+      game_question.help_hash['some_key2'] = 'blabla2'
+
+      expect(game_question.save).to be_truthy
+
+      gq = GameQuestion.find(game_question.id)
+
+      expect(gq.help_hash).to eq({some_key1: 'blabla1', 'some_key2' => 'blabla2'})
+    end
+
     describe '#correct_answer_key' do
       it 'return correct .correct_answer_key' do
         expect(game_question.correct_answer_key).to eq('b')
@@ -44,9 +57,27 @@ RSpec.describe GameQuestion, type: :model do
       game_question.add_audience_help
 
       expect(game_question.help_hash).to include(:audience_help)
-
       ah = game_question.help_hash[:audience_help]
       expect(ah.keys).to contain_exactly('a', 'b', 'c', 'd')
+    end
+
+    it 'correct fifty_fifty' do
+      expect(game_question.help_hash).not_to include(:fifty_fifty)
+
+      game_question.add_fifty_fifty
+
+      expect(game_question.help_hash).to include(:fifty_fifty)
+      expect(game_question.help_hash[:fifty_fifty]).to include(game_question.correct_answer_key)
+      expect(game_question.help_hash[:fifty_fifty].size).to eq(2)
+    end
+
+    it 'correct friend_call' do
+      expect(game_question.help_hash).not_to include(:friend_call)
+
+      game_question.add_friend_call
+
+      expect(game_question.help_hash).to include(:friend_call)
+      expect(game_question.help_hash[:friend_call]).to include('считает, что это вариант')
     end
   end
 end
