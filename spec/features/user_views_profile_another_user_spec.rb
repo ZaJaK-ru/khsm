@@ -29,7 +29,5 @@ RSpec.feature 'USER views profile another user', type: :feature do
     expect(page).to have_content('50/50')
     expect(page).to have_css('.fa-phone')
     expect(page).to have_css('.fa-users')
-
-    save_and_open_page
   end
 end
