@@ -28,7 +28,7 @@ RSpec.describe 'users/_game', type: :view do
 
   # Проверяем, что фрагмент выводит время начала игры
   it 'renders game start time' do
-    expect(rendered).to match '09 окт., 13:00'
+    expect(rendered).to match '09 окт., 09:00'
   end
 
   # Проверяем, что фрагмент выводит текущий уровень
